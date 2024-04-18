@@ -1,4 +1,4 @@
-import { modulo, encodeCaesarCypher, decodeCaesarCypher } from './crypto.js'; 
+import { modulo, encodeCaesarCypher, decodeCaesarCypher, badHash } from './crypto.js'; 
 
 describe('modulo', () => {
   test('should handle positive values', () => {
@@ -49,4 +49,35 @@ describe('decodeCaesarCypher', () => {
     expect(decodeCaesarCypher("abc", 3)).toEqual("xyz");
   });
 });
-//
+
+
+describe('badHash', () => {
+  test('should return a hexadecimal string', () => {
+    expect(typeof badHash("hello")).toBe('string');
+    expect(badHash("hello")).toMatch(/^[0-9a-fA-F]+$/);
+  });
+
+  test('should return different hashes for different inputs', () => {
+    const hash1 = badHash("hello");
+    const hash2 = badHash("world");
+    expect(hash1).not.toBe(hash2);
+  });
+
+  test('should return the same hash for the same input', () => {
+    const hash1 = badHash("hello");
+    const hash2 = badHash("hello");
+    expect(hash1).toBe(hash2);
+  });
+
+  test('should return a3 for bill', () => {
+    expect(badHash("bill")).toBe("a3");
+  });
+
+  test('should return 33 for bob', () => {
+    expect(badHash("bob")).toBe("33");
+  });
+
+  test('should return cb for barbara', () => {
+    expect(badHash("barbara")).toBe("cb");
+  });
+});
