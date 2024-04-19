@@ -24,7 +24,10 @@ const decodeCaesarCypher = (message, Ke) => {
 }
 
 /* Bad Hash function */
-const badHash = (message) => {
-  return ([...message].reduce( (acc, char) => { return acc + char.charCodeAt(0) }, 0) % 256).toString(16)}
-
-
+const badHash = message => {
+  return (
+    [...message].reduce((acc, char) => {
+      return acc + char.charCodeAt(0)
+    }, 0) % 256
+  ).toString(16)
+}
